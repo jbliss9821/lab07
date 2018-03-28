@@ -18,6 +18,8 @@ int main()
   heap.find_max();
   heap.build_heap();
   heap.level_order();
+  heap.delete_min();
+  heap.level_order();
 
   return 0;
 }
