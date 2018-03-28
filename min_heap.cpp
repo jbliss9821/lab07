@@ -77,50 +77,13 @@ void min_heap::heapify(int index)
 			heapify(smallest_child_index);//heapify down from swapped out value
 		}
 	}
-
-	/*
-	if (heap[index] == -1)
-	{
-		return;
-	}
-	int smallest_child = 5*index + 1;
-	for (int i = 1; i < 6; i++)
-	{
-		int child = 5*index + i;
-		if (heap[child] != -1)
-		{
-			std::cout << "index: " << index << "\n";
-			std::cout << "child: " << child << "\n";
-			std::cout << "value: " << heap[child] << "\n\n";
-		}
-		if (heap[child] > -1 && heap[child] < heap[smallest_child])//if the child is a valid value and is less than the current smallest child, it is the new smallest child
-		{
-			smallest_child = child;
-			std::cout << "smallest child: " << heap[smallest_child] << "\n";
-		}
-	}
-	if (heap[smallest_child] < heap[index])
-	{
-		//swap
-		std::cout << "parent: " << heap[index] << "\n";
-		std::cout << "smallest child index" << smallest_child << "\n";
-		int temp = heap[index];//current value to swap down
-		heap[index] = heap[smallest_child];//current index will now hold the smallest child value
-		heap[smallest_child] = temp;//smallest child index will now hold the previous parent/current index value
-		heapify(smallest_child);//recursive call to newly swapped down value to fix any issues that may come from swapping down
-	}
-	else
-	{
-		//don't swap
-	}
-	*/
 }
 
 void min_heap::insert(int value)
 {
 	heap[size] = value;
 	size++;
-	heapify((size / 2) -1);//heapify from parent of the inserted value which is put at bottom of the heap
+	heapify((size / 5) -1);//heapify from parent of the inserted value which is put at bottom of the heap
 }
 
 bool min_heap::delete_min()
