@@ -17,6 +17,7 @@ int main()
   heap.find_min();
   heap.find_max();
   heap.build_heap();
+  heap.level_order();
 
   return 0;
 }

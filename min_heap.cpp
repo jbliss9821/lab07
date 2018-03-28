@@ -36,32 +36,84 @@ void min_heap::heapify(int index)
 	//check for smallest child
 	//if smallest child is less than the current, swap
 	//if swap, check the child's children
+	std::cout << "heapify index is: " << index << "\n";
+	if (index < 0 || index > 500)//check that the index is w/in the bounds
+	{
+		std::cout << "index out of bound\n";
+		return;
+	}
+	else if (heap[index] == -1)//if the value is empty, go back up
+	{
+		std::cout << "index: " << index << " has no value.\n";
+		return;
+	}
+	else if (is_leaf(index))//if the index is a leaft, go back up
+	{
+		std::cout << "index is leaf\n";
+		return;
+	}
+	else//if w/in bounds, index isn't empty, and index isn't a leaf then we can check for values
+	{
+		int smallest_child_index = 5*index +1;
+		std::cout << "smallest index is: " << smallest_child_index << "\n";
+		for (int i = 1; i < 6; i++)
+		{
+			int current_child_index = 5*index + i;
+			std::cout << "current index is: " << smallest_child_index << "\n";
+			if (heap[current_child_index] > -1 && heap[current_child_index] < heap[smallest_child_index])
+			{
+				//if current index isn't empty and the current value < smallest value so far, update smallest value
+				std::cout << "changing smallest value from: " << heap[smallest_child_index] << " to " << heap[current_child_index] << "\n";
+				smallest_child_index = current_child_index;
+			}
+		}
+		if (heap[smallest_child_index] < heap[index])
+		{
+			//if the the smallest child value is less than then current value, swap the values around
+			std::cout << "\nchanging parent " << heap[index] << " to " << heap[smallest_child_index] << "\n";
+			int temp_parent = heap[index];
+			heap[index] = heap[smallest_child_index];
+			heap[smallest_child_index] = temp_parent;
+			heapify(smallest_child_index);//heapify down from swapped out value
+		}
+	}
+
+	/*
+	if (heap[index] == -1)
+	{
+		return;
+	}
 	int smallest_child = 5*index + 1;
 	for (int i = 1; i < 6; i++)
 	{
 		int child = 5*index + i;
 		if (heap[child] != -1)
 		{
-			std::cout << "index: " << child << "\n";
+			std::cout << "index: " << index << "\n";
+			std::cout << "child: " << child << "\n";
 			std::cout << "value: " << heap[child] << "\n\n";
 		}
-		//if (heap[child] > -1 && heap[child] < heap[smallest_child])//if the child is a valid value and is less than the current smallest child, it is the new smallest child
-		//{
-			//smallest_child = child;
-		//}
+		if (heap[child] > -1 && heap[child] < heap[smallest_child])//if the child is a valid value and is less than the current smallest child, it is the new smallest child
+		{
+			smallest_child = child;
+			std::cout << "smallest child: " << heap[smallest_child] << "\n";
+		}
 	}
-	//if (heap[smallest_child] < heap[index])
-	//{
+	if (heap[smallest_child] < heap[index])
+	{
 		//swap
-		//int temp = heap[index];//current value to swap down
-		//heap[index] = heap[smallest_child];//current index will now hold the smallest child value
-		//heap[smallest_child] = temp;//smallest child index will now hold the previous parent/current index value
-		//heapify(smallest_child);//recursive call to newly swapped down value to fix any issues that may come from swapping down
-	//}
-	//else
-	//{
+		std::cout << "parent: " << heap[index] << "\n";
+		std::cout << "smallest child index" << smallest_child << "\n";
+		int temp = heap[index];//current value to swap down
+		heap[index] = heap[smallest_child];//current index will now hold the smallest child value
+		heap[smallest_child] = temp;//smallest child index will now hold the previous parent/current index value
+		heapify(smallest_child);//recursive call to newly swapped down value to fix any issues that may come from swapping down
+	}
+	else
+	{
 		//don't swap
-	//}
+	}
+	*/
 }
 
 void min_heap::insert(int value)
@@ -161,15 +213,18 @@ void min_heap::level_order()
 
 bool min_heap::is_leaf(int index)
 {
+	//std::cout << "index of is leaf is: " << index << "\n";
 	for (int i = 1; i < 6; i++)
 	{
 		int child = 5*index + i;
+		//std::cout << "index of is leaf child is: " << child << "\n";
+		//std::cout << "value of is leaf child is: " << heap[child] << "\n";
 		if (heap[child] == -1)
 		{
-			return (false);
+			return (true);
 		}
 	}
-	return (true);
+	return (false);
 }
 
 
